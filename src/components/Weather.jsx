@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, TextField, Box } from '@mui/material';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
+import HomeIcon from '@mui/icons-material/Home';
+import earthSun from '../assets/earth-with-sun.svg';
 
 const Weather = () => {
   const [zipCode, setZipCode] = useState('');
@@ -15,7 +17,7 @@ const Weather = () => {
 
   const getZipCode = () => {
     fetch(
-      `http://api.weatherapi.com/v1/current.json?key=ae1558409c2a4c3390a163852241503&q=${zipCode}`
+      `https://api.weatherapi.com/v1/current.json?key=ae1558409c2a4c3390a163852241503&q=${zipCode}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -70,6 +72,13 @@ const Weather = () => {
         padding: '20px',
       }}
     >
+      <img
+        src={earthSun}
+        className="logo react"
+        alt="React logo"
+        width="120px"
+        height="120px"
+      />
       <div className="search">
         <h1>What is the weather like?</h1>
 
@@ -83,7 +92,11 @@ const Weather = () => {
               onChange={(e) => setZipCode(e.target.value)}
               variant="outlined"
               color="info"
-              size="medium"
+              InputLabel
+              sx={{
+                height: '40px',
+                '& .MuiInputBase-root': { height: '100%' },
+              }}
             />
           )}
           {displayElements.searchButton && (
@@ -92,13 +105,24 @@ const Weather = () => {
               id="searchButton"
               onClick={getZipCode}
               startIcon={<SearchSharpIcon />}
-              size="medium"
+              sx={{ height: '40px', minWidth: '100px' }}
             >
               Search
             </Button>
           )}
         </Box>
-        <div id="weather-info" className="weather-info">
+        <div
+          id="weather-info"
+          className="weather-info"
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            textAlign: 'center',
+            margin: '25px 0',
+          }}
+        >
           {displayElements.weatherIcon && (
             <img
               id="weatherIcon"
@@ -111,15 +135,29 @@ const Weather = () => {
               <h3>
                 {weatherData.location.name}, {weatherData.location.region}
               </h3>
-              <h4>{weatherData.current.temp_f}°F</h4>
-              <h5>{weatherData.currentCondition}</h5>
+              <h3>{weatherData.current.temp_f}°F</h3>
+              <h3>{weatherData.currentCondition}</h3>
             </div>
           )}
         </div>
         {displayElements.clearButton && (
-          <button id="clearPage" className="clear-button" onClick={clearPage}>
-            Clear
-          </button>
+          <Box
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Button
+              variant="contained"
+              id="clearPage"
+              startIcon={<HomeIcon />}
+              sx={{ height: '40px', minWidth: '125px' }}
+              onClick={clearPage}
+            >
+              Clear
+            </Button>
+          </Box>
         )}
       </div>
       {displayElements.apiCredit && (

@@ -11,15 +11,7 @@ function App() {
     <>
       <weather />
       <div>
-        <a href="https://react.dev" target="_blank">
-          <img
-            src={earthSun}
-            className="logo react"
-            alt="React logo"
-            width="200px"
-            height="200px"
-          />
-        </a>
+        <a href="https://react.dev" target="_blank" />
       </div>
 
       <Weather />

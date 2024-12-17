@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
-import Button from '@mui/material/Button';
+import earthSun from './assets/earth-with-sun.svg';
+import Weather from './components/weather';
 import './App.css';
 
 function App() {
@@ -9,27 +9,20 @@ function App() {
 
   return (
     <>
+      <weather />
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
         <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+          <img
+            src={earthSun}
+            className="logo react"
+            alt="React logo"
+            width="200px"
+            height="200px"
+          />
         </a>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-        <Button variant="contained">Hello Weather App</Button>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Weather />
     </>
   );
 }

@@ -72,14 +72,14 @@ const Weather = () => {
         padding: '20px',
       }}
     >
-      <img
-        src={earthSun}
-        className="logo react"
-        alt="React logo"
-        width="120px"
-        height="120px"
-      />
       <div className="search">
+        <img
+          src={earthSun}
+          className="logo react"
+          alt="React logo"
+          width="120px"
+          height="120px"
+        />
         <h1>What is the weather like?</h1>
 
         <Box display="flex" alignItems="center" justifyContent="center" gap={1}>

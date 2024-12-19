@@ -35,7 +35,7 @@ const Weather = () => {
             const currentCondition = isDay
               ? weatherCode.day
               : weatherCode.night;
-            const iconFolderPath = isDay ? 'icons/day' : 'icons/night';
+            const iconFolderPath = isDay ? '/icons/day' : '/icons/night';
 
             setWeatherData((prev) => ({
               ...prev,

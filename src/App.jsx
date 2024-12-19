@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import earthSun from './assets/earth-with-sun.svg';
-import Weather from './components/weather';
+import Weather from './components/Weather';
 import './App.css';
 
 function App() {

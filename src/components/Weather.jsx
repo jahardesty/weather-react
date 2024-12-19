@@ -23,7 +23,7 @@ const Weather = () => {
       .then((data) => {
         setWeatherData(data);
 
-        fetch('weatherData.json')
+        fetch('/weatherData.json')
           .then((response) => response.json())
           .then((weatherInfo) => {
             const weatherCode = weatherInfo.find(

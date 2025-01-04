@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, TextField, Box } from '@mui/material';
+import { Button, TextField, Box, Typography } from '@mui/material';
 import SearchSharpIcon from '@mui/icons-material/SearchSharp';
 import HomeIcon from '@mui/icons-material/Home';
 import earthSun from '../assets/earth-with-sun.svg';
@@ -7,6 +7,7 @@ import earthSun from '../assets/earth-with-sun.svg';
 const Weather = () => {
   const [zipCode, setZipCode] = useState('');
   const [weatherData, setWeatherData] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const [displayElements, setDisplayElements] = useState({
     weatherIcon: false,
     clearButton: false,
@@ -16,11 +17,22 @@ const Weather = () => {
   });
 
   const getZipCode = () => {
+    setErrorMessage('');
+
     fetch(
       `https://api.weatherapi.com/v1/current.json?key=ae1558409c2a4c3390a163852241503&q=${zipCode}`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid response from API');
+        }
+        return res.json();
+      })
       .then((data) => {
+        if (data.error || !data.current) {
+          throw new Error('Invalid zip code or no data returned');
+        }
+
         setWeatherData(data);
 
         fetch('/weatherData.json')
@@ -52,11 +64,21 @@ const Weather = () => {
               searchButton: false,
             });
           });
+      })
+      .catch((error) => {
+        setErrorMessage('Please enter a valid zip code.');
+        setWeatherData(null); // Clear any existing weather data
       });
   };
 
   const clearPage = () => {
     window.location.reload();
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      getZipCode();
+    }
   };
 
   return (
@@ -90,6 +112,7 @@ const Weather = () => {
               placeholder="Enter zip code"
               value={zipCode}
               onChange={(e) => setZipCode(e.target.value)}
+              onKeyDown={handleKeyDown} // EnterKey functionality
               variant="outlined"
               color="info"
               InputLabel
@@ -111,6 +134,11 @@ const Weather = () => {
             </Button>
           )}
         </Box>
+        {errorMessage && (
+          <Typography color="error" sx={{ marginTop: '10px' }}>
+            {errorMessage}
+          </Typography>
+        )}
         <div
           id="weather-info"
           className="weather-info"
